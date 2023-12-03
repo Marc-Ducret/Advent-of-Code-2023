@@ -3,8 +3,6 @@
 namespace Advent_of_Code_2023;
 
 public partial class Day02A : Problem<Day02A.Input, int> {
-    protected override string Id => "02_A";
-
     public readonly struct Input {
         public readonly Game[] games;
 

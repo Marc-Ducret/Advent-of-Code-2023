@@ -3,8 +3,6 @@
 namespace Advent_of_Code_2023;
 
 public partial class Day01B : Problem<Day01B.Input, int> {
-    protected override string Id => "01_B";
-
     public readonly struct Input {
         public readonly (int firstDigit, int lastDigit)[] rows;
 

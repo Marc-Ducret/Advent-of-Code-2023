@@ -1,8 +1,6 @@
 ﻿namespace Advent_of_Code_2023;
 
 public class Day01A : Problem<Day01A.Input, int> {
-    protected override string Id => "01_A";
-
     public readonly struct Input {
         public readonly (int firstDigit, int lastDigit)[] rows;
 
