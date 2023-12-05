@@ -1,4 +1,7 @@
-﻿namespace Advent_of_Code_2023;
+﻿using System.Diagnostics;
+using System.Globalization;
+
+namespace Advent_of_Code_2023;
 
 public abstract class Problem<TInput, TOutput> {
     protected abstract TInput  PreProcess(TextReader input);
@@ -39,12 +42,43 @@ public abstract class Problem<TInput, TOutput> {
     }
 
     public void Solve() {
-        Console.WriteLine($"# {GetType().Name} #");
+        Console.WriteLine($"╔════════╗");
+        Console.WriteLine($"║ {GetType().Name} ║");
+        Console.WriteLine($"╚════════╝");
         if (Test()) {
             Console.WriteLine("Problem Output");
             Console.WriteLine("──────────────────");
             Console.WriteLine(SolveFile($"{FileName}.input"));
             Console.WriteLine("──────────────────");
+        }
+
+        Benchmark();
+    }
+
+    public void Benchmark() {
+        TInput    input     = ReadInput($"{FileName}.input");
+        Stopwatch stopwatch = new();
+
+        TimeSpan timeBudget = TimeSpan.FromSeconds(1);
+
+        TimeSpan roughEstimate = Measure(1);
+        int      samples       = (int)Math.Ceiling(timeBudget.Divide(roughEstimate) / 2);
+
+        Measure(samples); // Warm
+        TimeSpan runsEstimate = Measure(samples);
+        Console.WriteLine($"Benchmark: {runsEstimate.Divide(samples).TotalMilliseconds:F2} ms ({samples} samples)");
+
+        return;
+
+        TimeSpan Measure(int runs) {
+            stopwatch.Reset();
+            stopwatch.Start();
+            for (int i = 0; i < runs; i++) {
+                Solve(input);
+            }
+
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
         }
     }
 
