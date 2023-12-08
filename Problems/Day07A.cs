@@ -1,8 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿namespace Advent_of_Code_2023;
 
-namespace Advent_of_Code_2023;
-
-public partial class Day07A : Problem<Day07A.Input, int> {
+public class Day07A : Problem<Day07A.Input, int> {
     public readonly record struct Input(Input.Hand[] Hands) {
         public readonly record struct Hand(byte[] CardRanks, int Bid) : IComparable<Hand> {
             private readonly HandType _type = TypeOf(CardRanks);
