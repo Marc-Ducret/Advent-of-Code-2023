@@ -72,6 +72,66 @@ public partial class Day08B : Problem<Day08B.Input, ulong> {
 
     private readonly record struct PathPattern(ulong[] Ends, ulong CycleStart, ulong CycleLength);
 
+    private struct EndsEnumerator {
+        private PathPattern pattern;
+
+        private bool  foundFirstCyclicEnd;
+        private int   firstCyclicEndIndex;
+        private ulong cycle;
+        private int   endIndex;
+
+        public EndsEnumerator(PathPattern pattern) {
+            this.pattern        = pattern;
+            foundFirstCyclicEnd = Current >= pattern.CycleStart;
+        }
+
+        public bool NextGreaterOrEqual(ulong threshold) {
+            while (!foundFirstCyclicEnd) {
+                if (Current >= threshold)
+                    return true;
+                if (++endIndex >= pattern.Ends.Length)
+                    return false;
+
+                if (Current >= pattern.CycleStart) {
+                    firstCyclicEndIndex = endIndex;
+                    foundFirstCyclicEnd = true;
+                }
+            }
+
+            if (Current >= threshold)
+                return true;
+
+            cycle += (threshold - Current) / pattern.CycleLength;
+
+            while (Current < threshold) {
+                if (++endIndex >= pattern.Ends.Length) {
+                    endIndex = firstCyclicEndIndex;
+                    cycle++;
+                }
+            }
+
+            return true;
+        }
+
+        public ulong Current => pattern.Ends[endIndex] + pattern.CycleLength * cycle;
+
+        // int firstCyclicEnd = 0;
+        // while (firstCyclicEnd               < pattern.Ends.Length
+        //     && pattern.Ends[firstCyclicEnd] < pattern.CycleStart) {
+        //     yield return pattern.Ends[firstCyclicEnd];
+        //     firstCyclicEnd++;
+        // }
+        //
+        // if (firstCyclicEnd >= pattern.Ends.Length)
+        //     yield break;
+        //
+        // for (ulong cycle = 0;; cycle++) {
+        //     for (int endIndex = firstCyclicEnd; endIndex < pattern.Ends.Length; endIndex++) {
+        //         yield return pattern.Ends[endIndex] + pattern.CycleLength * cycle;
+        //     }
+        // }
+    }
+
     private PathPattern FindPattern(Input.Node startNode, Input.Instruction[] instructions) {
         List<ulong>                            ends = new();
         Dictionary<(Input.Node, ulong), ulong> seen = new();
@@ -101,53 +161,26 @@ public partial class Day08B : Problem<Day08B.Input, ulong> {
         List<ulong> ends = new();
 
         {
-            using IEnumerator<ulong> EndsA = EnumerateEnds(patternA).GetEnumerator();
-            using IEnumerator<ulong> EndsB = EnumerateEnds(patternB).GetEnumerator();
+            EndsEnumerator endsA = new(patternA);
+            EndsEnumerator endsB = new(patternB);
 
-            EndsA.MoveNext();
-            EndsB.MoveNext();
+            endsA.NextGreaterOrEqual(0);
+            endsB.NextGreaterOrEqual(0);
 
-            ulong endA = EndsA.Current;
-            ulong endB = EndsB.Current;
-
-            while (Math.Min(endA, endB) < cycleStart + cycleLength) {
-                bool aLower = endA <= endB;
-                bool bLower = endB <= endA;
-                
-                if (aLower && bLower) {
-                    ends.Add(endA);
-                }
-
-                if (aLower) {
-                    if (!EndsA.MoveNext()) break;
-                    endA = EndsA.Current;
-                }
-                if (bLower) {
-                    if (!EndsB.MoveNext()) break;
-                    endB = EndsB.Current;
+            while (Math.Min(endsA.Current, endsB.Current) < cycleStart + cycleLength) {
+                if (endsA.Current == endsB.Current) {
+                    ends.Add(endsA.Current);
+                    if (!endsA.NextGreaterOrEqual(endsA.Current + 1)) break;
+                    if (!endsB.NextGreaterOrEqual(endsA.Current)) break;
+                } else if (endsA.Current < endsB.Current) {
+                    if (!endsA.NextGreaterOrEqual(endsB.Current)) break;
+                } else {
+                    if (!endsB.NextGreaterOrEqual(endsA.Current)) break;
                 }
             }
         }
 
         return new PathPattern(ends.ToArray(), cycleStart, cycleLength);
-
-        IEnumerable<ulong> EnumerateEnds(PathPattern pattern) {
-            int firstCyclicEnd = 0;
-            while (firstCyclicEnd               < pattern.Ends.Length
-                && pattern.Ends[firstCyclicEnd] < pattern.CycleStart) {
-                yield return pattern.Ends[firstCyclicEnd];
-                firstCyclicEnd++;
-            }
-
-            if (firstCyclicEnd >= pattern.Ends.Length)
-                yield break;
-
-            for (ulong cycle = 0;; cycle++) {
-                for (int endIndex = firstCyclicEnd; endIndex < pattern.Ends.Length; endIndex++) {
-                    yield return pattern.Ends[endIndex] + pattern.CycleLength * cycle;
-                }
-            }
-        }
     }
 
     protected override ulong Solve(Input input) {
@@ -156,7 +189,7 @@ public partial class Day08B : Problem<Day08B.Input, ulong> {
                                       .ToArray();
 
         PathPattern pattern = patterns.Aggregate(Intersect);
-        
+
         return pattern.Ends.First();
     }
 
