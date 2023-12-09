@@ -114,22 +114,6 @@ public partial class Day08B : Problem<Day08B.Input, ulong> {
         }
 
         public ulong Current => pattern.Ends[endIndex] + pattern.CycleLength * cycle;
-
-        // int firstCyclicEnd = 0;
-        // while (firstCyclicEnd               < pattern.Ends.Length
-        //     && pattern.Ends[firstCyclicEnd] < pattern.CycleStart) {
-        //     yield return pattern.Ends[firstCyclicEnd];
-        //     firstCyclicEnd++;
-        // }
-        //
-        // if (firstCyclicEnd >= pattern.Ends.Length)
-        //     yield break;
-        //
-        // for (ulong cycle = 0;; cycle++) {
-        //     for (int endIndex = firstCyclicEnd; endIndex < pattern.Ends.Length; endIndex++) {
-        //         yield return pattern.Ends[endIndex] + pattern.CycleLength * cycle;
-        //     }
-        // }
     }
 
     private PathPattern FindPattern(Input.Node startNode, Input.Instruction[] instructions) {
