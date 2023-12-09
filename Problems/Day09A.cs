@@ -7,9 +7,9 @@ public partial class Day09A : Problem<Day09A.Input, long> {
 
     public readonly record struct Sequence(long[] Values);
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         List<Sequence> sequences = new();
-        while (input.ReadLine() is {} line)
+        foreach (string line in input.Split('\n'))
             sequences.Add(new Sequence(Numbers(line)));
 
         return new Input(sequences.ToArray());

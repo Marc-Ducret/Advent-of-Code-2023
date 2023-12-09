@@ -9,9 +9,9 @@ public class Day01A : Problem<Day01A.Input, int> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         List<(int, int)> rows = new();
-        while (input.ReadLine() is { } line) {
+        foreach (string line in input.Split('\n')) {
             if (!line.Any(IsDigit)) continue;
             rows.Add((line.First(IsDigit) - '0', line.Last(IsDigit) - '0'));
         }

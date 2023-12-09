@@ -65,8 +65,8 @@ public partial class Day05B : Problem<Day05B.Input, uint> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
-        string[] blocks = input.ReadToEnd().Split("\n\n");
+    protected override Input PreProcess(string input) {
+        string[] blocks = input.Split("\n\n");
 
         Input.Range[] seeds;
         {

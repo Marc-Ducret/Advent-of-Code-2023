@@ -29,8 +29,8 @@ public partial class Day05A : Problem<Day05A.Input, uint> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
-        string[] blocks = input.ReadToEnd().Split("\n\n");
+    protected override Input PreProcess(string input) {
+        string[] blocks = input.Split("\n\n");
 
         return new Input(
             Numbers(blocks[0]),

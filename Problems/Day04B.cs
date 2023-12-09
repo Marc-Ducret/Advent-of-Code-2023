@@ -7,9 +7,9 @@ public partial class Day04B : Problem<Day04B.Input, int> {
         public readonly record struct Card(int Id, int[] Winning, int[] Have);
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         List<Input.Card> cards = new();
-        while (input.ReadLine() is { } line) {
+        foreach (string line in input.Split('\n')) {
             Match match = RowRegex().Match(line);
             if (!match.Success) continue;
             cards.Add(

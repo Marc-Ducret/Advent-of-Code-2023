@@ -18,9 +18,9 @@ public class Day07B : Problem<Day07B.Input, int> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         return new Input(
-            input.ReadToEnd()
+            input
                  .Split("\n")
                  .Select(line => {
                       string[] elements = line.Split(" ");

@@ -45,9 +45,9 @@ public partial class Day02B : Problem<Day02B.Input, int> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         List<Input.Game> games = new();
-        while (input.ReadLine() is { } line) {
+        foreach (string line in input.Split('\n')) {
             Match match = RowRegex().Match(line);
             if (!match.Success) continue;
             int id = int.Parse(match.Groups["id"].Value);

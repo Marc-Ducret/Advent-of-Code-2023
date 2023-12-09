@@ -32,13 +32,15 @@ public partial class Day08A : Problem<Day08A.Input, int> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         Dictionary<string, Input.Node> nodesByName = new();
 
-        Input.Instruction[] instructions =
-            input.ReadLine()!.Select(c => Enum.Parse<Input.Instruction>(c.ToString())).ToArray();
+        string[] lines = input.Split('\n');
 
-        while (input.ReadLine() is { } line) {
+        Input.Instruction[] instructions =
+            lines[0].Select(c => Enum.Parse<Input.Instruction>(c.ToString())).ToArray();
+
+        foreach (string line in lines[1..]) {
             if (line.Length == 0) continue;
             Match match = RowRegex().Match(line);
             if (!match.Success) {

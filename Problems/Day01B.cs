@@ -11,7 +11,7 @@ public partial class Day01B : Problem<Day01B.Input, int> {
         }
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         string[] digitsSpelled = {
             "zero",
             "one",
@@ -25,7 +25,7 @@ public partial class Day01B : Problem<Day01B.Input, int> {
             "nine"
         };
         List<(int, int)> rows = new();
-        while (input.ReadLine() is { } line) {
+        foreach (string line in input.Split('\n')) {
             MatchCollection matches = DigitRegex().Matches(line);
             if (!matches.Any()) continue;
             rows.Add((ParseDigit(matches.First().Groups[1].Value), ParseDigit(matches.Last().Groups[1].Value)));

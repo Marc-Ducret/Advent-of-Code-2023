@@ -25,9 +25,9 @@ public class Day03A : Problem<Day03A.Input, int> {
         SYMBOL
     }
 
-    protected override Input PreProcess(TextReader input) {
+    protected override Input PreProcess(string input) {
         List<string> lines = new();
-        while (input.ReadLine() is { } line) {
+        foreach (string line in input.Split('\n')) {
             if (line.Length == 0) continue;
             lines.Add(line);
         }

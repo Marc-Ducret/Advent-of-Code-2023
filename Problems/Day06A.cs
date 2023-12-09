@@ -7,9 +7,10 @@ public partial class Day06A : Problem<Day06A.Input, int> {
         public readonly record struct Race(int Time, int DistanceRecord);
     }
 
-    protected override Input PreProcess(TextReader input) {
-        int[] times           = Numbers(input.ReadLine()!);
-        int[] distanceRecords = Numbers(input.ReadLine()!);
+    protected override Input PreProcess(string input) {
+        string[] lines           = input.Split('\n');
+        int[]    times           = Numbers(lines[0]);
+        int[]    distanceRecords = Numbers(lines[1]);
 
         return new Input(times.Zip(distanceRecords).Select(pair => new Input.Race(pair.First, pair.Second)).ToArray());
 
