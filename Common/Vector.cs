@@ -13,25 +13,64 @@ public record struct Int2(int X, int Y) {
         new(lhs.X >= rhs.X,
             lhs.Y >= rhs.Y);
 
-    public static Bool2 operator <=(Int2 lhs, Int2 rhs) =>
+    public static Bool2 operator <=(in Int2 lhs, in Int2 rhs) =>
         new(lhs.X <= rhs.X,
             lhs.Y <= rhs.Y);
 
-    public static Bool2 operator <(Int2 lhs, Int2 rhs) =>
+    public static Bool2 operator <(in Int2 lhs, in Int2 rhs) =>
         new(lhs.X < rhs.X,
             lhs.Y < rhs.Y);
 
-    public static Bool2 operator >(Int2 lhs, Int2 rhs) =>
+    public static Bool2 operator >(in Int2 lhs, in Int2 rhs) =>
         new(lhs.X > rhs.X,
             lhs.Y > rhs.Y);
 
-    public static Int2 operator +(Int2 lhs, Int2 rhs) =>
+    public static Int2 operator +(in Int2 lhs, in Int2 rhs) =>
         new(lhs.X + rhs.X,
             lhs.Y + rhs.Y);
 
-    public static Int2 operator -(Int2 lhs, Int2 rhs) =>
+    public static Int2 operator -(in Int2 lhs, in Int2 rhs) =>
         new(lhs.X - rhs.X,
             lhs.Y - rhs.Y);
 
-    public static implicit operator Int2(int value) => new(value, value);
+    public static implicit operator Int2(int   value) => new(value, value);
+    public static implicit operator Long2(Int2 value) => new(value.X, value.Y);
+
+    public static Int2 Abs(in  Int2 value) => new(Math.Abs(value.X), Math.Abs(value.Y));
+    public static int  CSum(in Int2 value) => value.X + value.Y;
+}
+
+public record struct Long2(long X, long Y) {
+    public static Bool2 operator >=(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X >= rhs.X,
+            lhs.Y >= rhs.Y);
+
+    public static Bool2 operator <=(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X <= rhs.X,
+            lhs.Y <= rhs.Y);
+
+    public static Bool2 operator <(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X < rhs.X,
+            lhs.Y < rhs.Y);
+
+    public static Bool2 operator >(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X > rhs.X,
+            lhs.Y > rhs.Y);
+
+    public static Long2 operator +(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X + rhs.X,
+            lhs.Y + rhs.Y);
+
+    public static Long2 operator -(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X - rhs.X,
+            lhs.Y - rhs.Y);
+
+    public static Long2 operator *(in long lhs, in Long2 rhs) =>
+        new(lhs * rhs.X,
+            lhs * rhs.Y);
+
+    public static implicit operator Long2(int value) => new(value, value);
+
+    public static Long2 Abs(in  Long2 value) => new(Math.Abs(value.X), Math.Abs(value.Y));
+    public static long  CSum(in Long2 value) => value.X + value.Y;
 }
