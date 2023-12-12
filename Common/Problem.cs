@@ -43,9 +43,8 @@ public abstract class Problem<TInput, TOutput> {
             Console.WriteLine("──────────────────");
             Console.WriteLine(SolveFile($"{FileName}.input"));
             Console.WriteLine("──────────────────");
+            Benchmark();
         }
-
-        Benchmark();
     }
 
     public void Benchmark() {
