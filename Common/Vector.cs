@@ -33,6 +33,14 @@ public record struct Int2(int X, int Y) {
         new(lhs.X - rhs.X,
             lhs.Y - rhs.Y);
 
+    public static Int2 operator *(in Int2 lhs, in Int2 rhs) =>
+        new(lhs.X * rhs.X,
+            lhs.Y * rhs.Y);
+
+    public static Int2 operator -(in Int2 value) =>
+        new(-value.X,
+            -value.Y);
+
     public static implicit operator Int2(int   value) => new(value, value);
     public static implicit operator Long2(Int2 value) => new(value.X, value.Y);
 
