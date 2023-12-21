@@ -1,0 +1,11 @@
+broadcaster -> aa, ba
+%aa -> ab, ad
+%ab -> ac, ad
+&ad -> aa
+&ac -> nand
+%ba -> bb
+%bb -> bc
+%bc -> bd
+%bd -> be
+&be -> nand
+&nand -> rx
