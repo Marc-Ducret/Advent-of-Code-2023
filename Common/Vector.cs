@@ -7,6 +7,8 @@ public record struct Bool2(bool X, bool Y) {
     public static Bool2 operator &(Bool2 lhs, Bool2 rhs) =>
         new(lhs.X & rhs.X,
             lhs.Y & rhs.Y);
+
+    public static implicit operator Int2(Bool2 value) => new(value.X ? 1 : 0, value.Y ? 1 : 0);
 }
 
 public record struct Bool4(bool X, bool Y, bool Z, bool W) {
@@ -49,6 +51,10 @@ public record struct Int2(int X, int Y) {
         new(lhs.X * rhs.X,
             lhs.Y * rhs.Y);
 
+    public static Int2 operator /(in Int2 lhs, in Int2 rhs) =>
+        new(lhs.X / rhs.X,
+            lhs.Y / rhs.Y);
+
     public static Int2 operator -(in Int2 value) =>
         new(-value.X,
             -value.Y);
@@ -56,10 +62,12 @@ public record struct Int2(int X, int Y) {
     public static implicit operator Int2(int   value) => new(value, value);
     public static implicit operator Long2(Int2 value) => new(value.X, value.Y);
 
-    public static Int2 Abs(in  Int2 value)            => new(Math.Abs(value.X), Math.Abs(value.Y));
-    public static int  CSum(in Int2 value)            => value.X + value.Y;
-    public static Int2 Min(in  Int2 lhs, in Int2 rhs) => new(Math.Min(lhs.X, rhs.X), Math.Min(lhs.Y, rhs.Y));
-    public static Int2 Max(in  Int2 lhs, in Int2 rhs) => new(Math.Max(lhs.X, rhs.X), Math.Max(lhs.Y, rhs.Y));
+    public static Int2  Abs(in  Int2 value)            => new(Math.Abs(value.X), Math.Abs(value.Y));
+    public static Int2  Sign(in Int2 value)            => new(Math.Sign(value.X), Math.Sign(value.Y));
+    public static int   CSum(in Int2 value)            => value.X + value.Y;
+    public static Int2  Min(in  Int2 lhs, in Int2 rhs) => new(Math.Min(lhs.X, rhs.X), Math.Min(lhs.Y, rhs.Y));
+    public static Int2  Max(in  Int2 lhs, in Int2 rhs) => new(Math.Max(lhs.X, rhs.X), Math.Max(lhs.Y, rhs.Y));
+    public static Bool2 Eq(in   Int2 lhs, in Int2 rhs) => new(lhs.X == rhs.X, lhs.Y == rhs.Y);
 }
 
 public record struct Long2(long X, long Y) {
@@ -162,8 +170,8 @@ public record struct Int4(int X, int Y, int Z, int W) {
                                                             Math.Max(lhs.Y, rhs.Y),
                                                             Math.Max(lhs.Z, rhs.Z),
                                                             Math.Max(lhs.W, rhs.W));
-    
-    public static implicit operator Int4(int value) => new(value, value, value, value);
+
+    public static implicit operator Int4(int   value) => new(value, value, value, value);
     public static implicit operator Long4(Int4 value) => new(value.X, value.Y, value.Z, value.W);
 }
 
@@ -217,22 +225,22 @@ public record struct Long4(long X, long Y, long Z, long W) {
             -value.W);
 
     public static Long4 Abs(in Long4 value) => new(Math.Abs(value.X),
-                                                 Math.Abs(value.Y),
-                                                 Math.Abs(value.Z),
-                                                 Math.Abs(value.W));
+                                                   Math.Abs(value.Y),
+                                                   Math.Abs(value.Z),
+                                                   Math.Abs(value.W));
 
     public static long CSum(in Long4 value) => value.X + value.Y + value.Z + value.W;
     public static long CMul(in Long4 value) => value.X * value.Y * value.Z * value.W;
 
     public static Long4 Min(in Long4 lhs, in Long4 rhs) => new(Math.Min(lhs.X, rhs.X),
-                                                            Math.Min(lhs.Y, rhs.Y),
-                                                            Math.Min(lhs.Z, rhs.Z),
-                                                            Math.Min(lhs.W, rhs.W));
+                                                               Math.Min(lhs.Y, rhs.Y),
+                                                               Math.Min(lhs.Z, rhs.Z),
+                                                               Math.Min(lhs.W, rhs.W));
 
     public static Long4 Max(in Long4 lhs, in Long4 rhs) => new(Math.Max(lhs.X, rhs.X),
-                                                            Math.Max(lhs.Y, rhs.Y),
-                                                            Math.Max(lhs.Z, rhs.Z),
-                                                            Math.Max(lhs.W, rhs.W));
-    
+                                                               Math.Max(lhs.Y, rhs.Y),
+                                                               Math.Max(lhs.Z, rhs.Z),
+                                                               Math.Max(lhs.W, rhs.W));
+
     public static implicit operator Long4(long value) => new(value, value, value, value);
 }
