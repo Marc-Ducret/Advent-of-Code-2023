@@ -11,6 +11,16 @@ public record struct Bool2(bool X, bool Y) {
     public static implicit operator Int2(Bool2 value) => new(value.X ? 1 : 0, value.Y ? 1 : 0);
 }
 
+public record struct Bool3(bool X, bool Y, bool Z) {
+    public readonly bool All => X && Y && Z;
+    public readonly bool Any => X || Y || Z;
+
+    public static Bool3 operator &(Bool3 lhs, Bool3 rhs) =>
+        new(lhs.X & rhs.X,
+            lhs.Y & rhs.Y,
+            lhs.Z & rhs.Z);
+}
+
 public record struct Bool4(bool X, bool Y, bool Z, bool W) {
     public readonly bool All => X && Y && Z && W;
     public readonly bool Any => X || Y || Z || W;
@@ -103,6 +113,68 @@ public record struct Long2(long X, long Y) {
 
     public static Long2 Abs(in  Long2 value) => new(Math.Abs(value.X), Math.Abs(value.Y));
     public static long  CSum(in Long2 value) => value.X + value.Y;
+}
+
+public record struct Int3(int X, int Y, int Z) {
+    public Int2 xy => new(X, Y);
+    public Int2 xz => new(X, Z);
+    public Int2 yz => new(Y, Z);
+    
+    public static Bool3 operator >=(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X >= rhs.X,
+            lhs.Y >= rhs.Y,
+            lhs.Z >= rhs.Z);
+
+    public static Bool3 operator <=(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X <= rhs.X,
+            lhs.Y <= rhs.Y,
+            lhs.Z <= rhs.Z);
+
+    public static Bool3 operator <(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X < rhs.X,
+            lhs.Y < rhs.Y,
+            lhs.Z < rhs.Z);
+
+    public static Bool3 operator >(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X > rhs.X,
+            lhs.Y > rhs.Y,
+            lhs.Z > rhs.Z);
+
+    public static Int3 operator +(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X + rhs.X,
+            lhs.Y + rhs.Y,
+            lhs.Z + rhs.Z);
+
+    public static Int3 operator -(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X - rhs.X,
+            lhs.Y - rhs.Y,
+            lhs.Z - rhs.Z);
+
+    public static Int3 operator *(in Int3 lhs, in Int3 rhs) =>
+        new(lhs.X * rhs.X,
+            lhs.Y * rhs.Y,
+            lhs.Z * rhs.Z);
+
+    public static Int3 operator -(in Int3 value) =>
+        new(-value.X,
+            -value.Y,
+            -value.Z);
+    
+    public static Int3 Abs(in Int3 value) => new(Math.Abs(value.X),
+                                                 Math.Abs(value.Y),
+                                                 Math.Abs(value.Z));
+
+    public static int CSum(in Int3 value) => value.X + value.Y + value.Z;
+
+    public static Int3 Min(in Int3 lhs, in Int3 rhs) => new(Math.Min(lhs.X, rhs.X),
+                                                            Math.Min(lhs.Y, rhs.Y),
+                                                            Math.Min(lhs.Z, rhs.Z));
+
+    public static Int3 Max(in Int3 lhs, in Int3 rhs) => new(Math.Max(lhs.X, rhs.X),
+                                                            Math.Max(lhs.Y, rhs.Y),
+                                                            Math.Max(lhs.Z, rhs.Z));
+
+    public static implicit operator Int3(int   value) => new(value, value, value);
 }
 
 public record struct Int4(int X, int Y, int Z, int W) {
