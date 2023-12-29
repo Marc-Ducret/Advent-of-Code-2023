@@ -105,9 +105,17 @@ public record struct Long2(long X, long Y) {
         new(lhs.X - rhs.X,
             lhs.Y - rhs.Y);
 
+    public static Long2 operator *(in Long2 lhs, in Long2 rhs) =>
+        new(lhs.X * rhs.X,
+            lhs.Y * rhs.Y);
+
     public static Long2 operator *(in long lhs, in Long2 rhs) =>
         new(lhs * rhs.X,
             lhs * rhs.Y);
+
+    public static Long2 operator /(in Long2 lhs, in long rhs) =>
+        new(lhs.X / rhs,
+            lhs.Y / rhs);
 
     public static implicit operator Long2(int value) => new(value, value);
 
@@ -119,7 +127,7 @@ public record struct Int3(int X, int Y, int Z) {
     public Int2 xy => new(X, Y);
     public Int2 xz => new(X, Z);
     public Int2 yz => new(Y, Z);
-    
+
     public static Bool3 operator >=(in Int3 lhs, in Int3 rhs) =>
         new(lhs.X >= rhs.X,
             lhs.Y >= rhs.Y,
@@ -159,7 +167,7 @@ public record struct Int3(int X, int Y, int Z) {
         new(-value.X,
             -value.Y,
             -value.Z);
-    
+
     public static Int3 Abs(in Int3 value) => new(Math.Abs(value.X),
                                                  Math.Abs(value.Y),
                                                  Math.Abs(value.Z));
@@ -174,7 +182,82 @@ public record struct Int3(int X, int Y, int Z) {
                                                             Math.Max(lhs.Y, rhs.Y),
                                                             Math.Max(lhs.Z, rhs.Z));
 
-    public static implicit operator Int3(int   value) => new(value, value, value);
+    public static implicit operator Int3(int value) => new(value, value, value);
+}
+
+public record struct Long3(long X, long Y, long Z) {
+    public Long2 xy => new(X, Y);
+    public Long2 xz => new(X, Z);
+    public Long2 yz => new(Y, Z);
+
+    public static Bool3 operator >=(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X >= rhs.X,
+            lhs.Y >= rhs.Y,
+            lhs.Z >= rhs.Z);
+
+    public static Bool3 operator <=(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X <= rhs.X,
+            lhs.Y <= rhs.Y,
+            lhs.Z <= rhs.Z);
+
+    public static Bool3 operator <(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X < rhs.X,
+            lhs.Y < rhs.Y,
+            lhs.Z < rhs.Z);
+
+    public static Bool3 operator >(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X > rhs.X,
+            lhs.Y > rhs.Y,
+            lhs.Z > rhs.Z);
+
+    public static Long3 operator +(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X + rhs.X,
+            lhs.Y + rhs.Y,
+            lhs.Z + rhs.Z);
+
+    public static Long3 operator -(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X - rhs.X,
+            lhs.Y - rhs.Y,
+            lhs.Z - rhs.Z);
+
+    public static Long3 operator *(in Long3 lhs, in Long3 rhs) =>
+        new(lhs.X * rhs.X,
+            lhs.Y * rhs.Y,
+            lhs.Z * rhs.Z);
+
+    public static Long3 operator /(in Long3 lhs, in long rhs) =>
+        new(lhs.X / rhs,
+            lhs.Y / rhs,
+            lhs.Z / rhs);
+
+    public static Long3 operator -(in Long3 value) =>
+        new(-value.X,
+            -value.Y,
+            -value.Z);
+
+    public static Long3 Abs(in Long3 value) => new(Math.Abs(value.X),
+                                                   Math.Abs(value.Y),
+                                                   Math.Abs(value.Z));
+
+    public static long CSum(in Long3 value) => value.X + value.Y + value.Z;
+
+    public static Long3 Min(in Long3 lhs, in Long3 rhs) => new(Math.Min(lhs.X, rhs.X),
+                                                               Math.Min(lhs.Y, rhs.Y),
+                                                               Math.Min(lhs.Z, rhs.Z));
+
+    public static Long3 Max(in Long3 lhs, in Long3 rhs) => new(Math.Max(lhs.X, rhs.X),
+                                                               Math.Max(lhs.Y, rhs.Y),
+                                                               Math.Max(lhs.Z, rhs.Z));
+
+    public static Long3 Cross(in Long3 lhs, in Long3 rhs) => new(lhs.Y * rhs.Z - lhs.Z * rhs.Y,
+                                                                 lhs.Z * rhs.X - lhs.X * rhs.Z,
+                                                                 lhs.X * rhs.Y - lhs.Y * rhs.X);
+
+    public static long Dot(in Long3 lhs, in Long3 rhs) => CSum(lhs * rhs);
+
+    public static long LengthSq(in Long3 value) => Dot(value, value);
+
+    public static implicit operator Long3(long value) => new(value, value, value);
 }
 
 public record struct Int4(int X, int Y, int Z, int W) {

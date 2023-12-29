@@ -2,10 +2,10 @@
 
 namespace Advent_of_Code_2023;
 
-public partial class Day05A : Problem<Day05A.Input, uint> {
-    public readonly record struct Input(uint[] Seeds, Input.Mapping[] Mappings) {
+public partial class Day05A : Problem<Day05A.Input, long> {
+    public readonly record struct Input(long[] Seeds, Input.Mapping[] Mappings) {
         public readonly record struct Mapping(RangeMap[] RangeMaps) {
-            public uint Map(uint value) {
+            public long Map(long value) {
                 foreach (RangeMap rangeMap in RangeMaps) {
                     if (rangeMap.ContainsFrom(value))
                         return rangeMap.Map(value);
@@ -15,12 +15,12 @@ public partial class Day05A : Problem<Day05A.Input, uint> {
             }
         }
 
-        public readonly record struct RangeMap(uint ToStart, uint FromStart, uint Count) {
-            public bool ContainsFrom(uint value) => value >= FromStart && value < FromStart + Count;
-            public uint Map(uint          value) => ToStart + (value                        - FromStart);
+        public readonly record struct RangeMap(long ToStart, long FromStart, long Count) {
+            public bool ContainsFrom(long value) => value >= FromStart && value < FromStart + Count;
+            public long Map(long          value) => ToStart + (value                        - FromStart);
         }
 
-        public uint Map(uint value) {
+        public long Map(long value) {
             foreach (Mapping mapping in Mappings) {
                 value = mapping.Map(value);
             }
@@ -45,10 +45,10 @@ public partial class Day05A : Problem<Day05A.Input, uint> {
                .ToArray()
         );
 
-        static uint[] Numbers(string s) => NumberRegex().Matches(s).Select(m => uint.Parse(m.Value)).ToArray();
+        static long[] Numbers(string s) => NumberRegex().Matches(s).Select(m => long.Parse(m.Value)).ToArray();
     }
 
-    protected override uint Solve(Input input) {
+    protected override long Solve(Input input) {
         return input.Seeds.Min(input.Map);
     }
 

@@ -12,6 +12,9 @@ public static class IntMath {
         return a | b;
     }
 
+    public static ulong GCD(ulong a, ulong b, ulong c) =>
+        GCD(GCD(a, b), c);
+
     public static ulong LCM(ulong a, ulong b) => a * b / GCD(a, b);
 
     public static Int2 RotateRight(in Int2 value) => new(+value.Y, -value.X);
